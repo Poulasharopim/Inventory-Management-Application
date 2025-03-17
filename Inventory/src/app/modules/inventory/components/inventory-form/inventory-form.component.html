@@ -1,0 +1,33 @@
+<form [formGroup]="inventoryForm">
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="name">Name</label>
+        <input pInputText id="name" formControlName="name" required />
+        <small *ngIf="inventoryForm.get('name')?.invalid && inventoryForm.get('name')?.touched" class="error">
+          Name is required.
+        </small>
+      </div>
+  
+      <div class="p-field">
+        <label for="category">Category</label>
+        <input pInputText id="category" formControlName="category" required />
+        <small *ngIf="inventoryForm.get('category')?.invalid && inventoryForm.get('category')?.touched" class="error">
+          Category is required.
+        </small>
+      </div>
+  
+      <div class="p-field">
+        <label for="stock">Stock</label>
+        <input pInputText id="stock" type="number" formControlName="stock" min="0" required />
+        <small *ngIf="inventoryForm.get('stock')?.invalid && inventoryForm.get('stock')?.touched" class="error">
+          Stock must be a non-negative number.
+        </small>
+      </div>
+    </div>
+  
+    <p-footer>
+      <button pButton label="Close" class="p-button-secondary" (click)="close.emit()"></button>
+      <button pButton label="Save" class="p-button-primary" (click)="saveItem()" [disabled]="inventoryForm.invalid || readonly" *ngIf="!readonly"></button>
+    </p-footer>
+  </form>
+  

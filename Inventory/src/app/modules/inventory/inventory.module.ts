@@ -7,13 +7,14 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TooltipModule } from 'primeng/tooltip';
+import { DropdownModule } from 'primeng/dropdown';
 import { InventoryListComponent } from './components/inventory-list/inventory-list.component';
 import { InventoryFormComponent } from './components/inventory-form/inventory-form.component';
 import { InventoryRoutingModule } from './inventory-routing.module';
 
 @NgModule({
   declarations: [InventoryListComponent, InventoryFormComponent],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TableModule ,ButtonModule, TooltipModule,DialogModule, InputTextModule, InputNumberModule, InventoryRoutingModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TableModule ,ButtonModule, TooltipModule,DialogModule,DropdownModule, InputTextModule, InputNumberModule, InventoryRoutingModule],
   exports: [InventoryListComponent, InventoryFormComponent]
 })
 export class InventoryModule {}

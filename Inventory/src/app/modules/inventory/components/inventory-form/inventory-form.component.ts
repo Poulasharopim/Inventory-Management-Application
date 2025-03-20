@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { InventoryService } from '../../services/inventory.service';
 import { InventoryItem } from '../../models/inventory.model';
 
@@ -15,14 +15,22 @@ export class InventoryFormComponent implements OnInit, OnChanges {
 
   inventoryForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private inventoryService: InventoryService) {}
+  constructor(private fb: FormBuilder, private inventoryService: InventoryService) {
+    this.inventoryForm = this.fb.group({
+      name: ['', Validators.required],
+      category: ['', Validators.required],
+      stock: [0, [Validators.required, Validators.min(0)]]
+    });
+  }
 
   ngOnInit() {
-    this.initializeForm();
+    if (this.item) {
+      this.initializeForm();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['item'] && !changes['item'].firstChange) {
+    if (changes['item'] && !changes['item'].firstChange && this.item) {
       this.initializeForm();
     }
     if (changes['readonly'] && !changes['readonly'].firstChange) {
@@ -32,20 +40,21 @@ export class InventoryFormComponent implements OnInit, OnChanges {
 
   private initializeForm() {
     if (this.item.id === 0) {
-      this.inventoryForm = this.fb.group({
-        name: ['', Validators.required],
-        category: ['', Validators.required],
-        stock: [0, [Validators.required, Validators.min(0)]]
+      this.inventoryForm.patchValue({
+        name: '',
+        category: '',
+        stock: 0
       });
     } else {
-      this.inventoryForm = this.fb.group({
-        name: [this.item.name, Validators.required],
-        category: [this.item.category, Validators.required],
-        stock: [this.item.stock, [Validators.required, Validators.min(0)]]
+      this.inventoryForm.patchValue({
+        name: this.item.name,
+        category: this.item.category,
+        stock: this.item.stock
       });
     }
     this.setReadonlyState();
   }
+
 
   private setReadonlyState() {
     if (this.readonly) {

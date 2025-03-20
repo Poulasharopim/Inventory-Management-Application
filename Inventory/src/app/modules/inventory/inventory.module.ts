@@ -6,13 +6,15 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TooltipModule } from 'primeng/tooltip';
+import { DropdownModule } from 'primeng/dropdown';
 import { InventoryListComponent } from './components/inventory-list/inventory-list.component';
 import { InventoryFormComponent } from './components/inventory-form/inventory-form.component';
+import { InventoryRoutingModule } from './inventory-routing.module';
 
 @NgModule({
   declarations: [InventoryListComponent, InventoryFormComponent],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TableModule, BrowserAnimationsModule ,ButtonModule, DialogModule, InputTextModule, InputNumberModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TableModule ,ButtonModule, TooltipModule,DialogModule,DropdownModule, InputTextModule, InputNumberModule, InventoryRoutingModule],
   exports: [InventoryListComponent, InventoryFormComponent]
 })
 export class InventoryModule {}

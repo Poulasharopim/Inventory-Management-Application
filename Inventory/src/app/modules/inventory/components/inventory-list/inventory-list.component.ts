@@ -29,7 +29,7 @@ export class InventoryListComponent implements OnInit {
   ngOnInit() {
     this.inventoryService.inventory$.subscribe((data) => {
       this.inventory = data;
-      this.filteredInventory = [...this.inventory];
+      this.filterByStockStatus();
     });
   }
   filterGlobal($event: Event, stringVal: string) {

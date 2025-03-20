@@ -23,11 +23,16 @@ export class InventoryService {
           id: product.id,
           name: product.title,
           category: product.category,
-          stock: Math.floor(Math.random() * 20), // Random stock quantity
+          stock: Math.floor(Math.random() * 20),
           lastUpdated: new Date()
         }))
       )
     ).subscribe(data => this.inventorySubject.next(data));
+  }
+
+  addItem(newItem: InventoryItem) {
+    const updatedData = [...this.inventorySubject.value, newItem];
+    this.inventorySubject.next(updatedData);
   }
 
   updateItem(updatedItem: InventoryItem) {

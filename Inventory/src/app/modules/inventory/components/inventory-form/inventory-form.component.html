@@ -26,8 +26,10 @@
     </div>
   
     <p-footer>
-      <button pButton label="Close" class="p-button-secondary" (click)="close.emit()"></button>
-      <button pButton label="Save" class="p-button-primary" (click)="saveItem()" [disabled]="inventoryForm.invalid || readonly" *ngIf="!readonly"></button>
+        <div class="dialog-actions">
+            <button pButton label="Close" class="p-button-secondary" (click)="close.emit()"></button>
+            <button pButton label="Save" class="p-button-primary" (click)="saveItem()" [disabled]="inventoryForm.invalid || readonly" *ngIf="!readonly"></button>
+        </div>
     </p-footer>
   </form>
   

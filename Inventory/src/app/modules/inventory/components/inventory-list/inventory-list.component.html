@@ -1,10 +1,22 @@
-<p-table [value]="inventory" class="p-datatable-striped" [paginator]="true" [rows]="10">
+<header>
+    <img src="assets/images/Inventory-logo.png" class="logo" alt="Inventory-logo">
+</header>
+<p-table #inventoryTable [value]="inventory" class="p-datatable-striped" [paginator]="true" [rows]="10" [globalFilterFields]="['name']">
+    <ng-template pTemplate="caption">
+        <div class="action-bar">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [(ngModel)]="searchValue" (input)="filterGlobal($event, 'contains')" placeholder="Search By Item Name" />
+            </span>
+            <button pButton pTooltip="Add New Item" tooltipPosition="bottom"  icon="pi pi-plus" class="p-button-success" (click)="openDialog(newItem, false)"></button>
+        </div>
+    </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-        <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
+        <th>Name </th>
+        <th >Category </th>
         <th pSortableColumn="stock">Stock Quantity <p-sortIcon field="stock"></p-sortIcon></th>
-        <th pSortableColumn="lastUpdated">Last Updated <p-sortIcon field="lastUpdated"></p-sortIcon></th>
+        <th >Last Updated </th>
         <th>Actions</th>
       </tr>
     </ng-template>
@@ -19,14 +31,13 @@
         </td>
         <td>{{ item.lastUpdated | date: 'dd/MM/yyyy' }}</td>
         <td>
-          <button pButton icon="pi pi-eye" class="p-button-rounded p-button-info" (click)="openDialog(item, true)"></button>
-          <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-warning" (click)="openDialog(item, false)"></button>
+            <button pButton icon="pi pi-eye" pTooltip="View Item" tooltipPosition="left" class="p-button-rounded p-button-info" (click)="openDialog(item, true)"></button>
+            <button pButton icon="pi pi-pencil" pTooltip="Edit Item" class="p-button-rounded p-button-warning ml-8" (click)="openDialog(item, false)"></button>
         </td>
       </tr>
     </ng-template>
   </p-table>
   
-  <p-dialog [(visible)]="displayDialog" header="{{ readonlyMode ? 'View Inventory Item' : 'Edit Inventory Item' }}" [modal]="true" [closable]="true">
+  <p-dialog [(visible)]="displayDialog" [header]="selectedItem?.id === 0 ? 'Add New Inventory Item' : (readonlyMode ? 'View Inventory Item' : 'Edit Inventory Item')" [modal]="true" [closable]="true">
     <app-inventory-form *ngIf="selectedItem" [item]="selectedItem" [readonly]="readonlyMode" (close)="displayDialog = false"></app-inventory-form>
   </p-dialog>
-  
